@@ -3,7 +3,7 @@ export default interface IUserDocument {
   username: string | null;
   email: string | null;
   password: string | null;
-  // savedItems: IItem[] | null;
+  savedItems: IItem[];
   isCorrectPassword(password: string): Promise<boolean>;
  // bookCount: number | null;
 }
