@@ -6,7 +6,7 @@ interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  savedItem: IItem[];
+  savedItems: IItem[];
   isCorrectPassword(password: string): Promise<boolean>;
   // bookCount: number;
 }
@@ -28,7 +28,7 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
-    savedItem: [itemSchema],
+    savedItems: [itemSchema],
   }
   // set this to use virtual below
   // {
