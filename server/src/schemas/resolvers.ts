@@ -33,11 +33,11 @@ const resolvers = {
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
     },
-    saveItem: async (_parent: any, { itemData }: { itemData: IItemInput }, context: IUserContext): Promise<IUserDocument | null> => {
+    addItem: async (_parent: any, { itemData }: { itemData: IItemInput }, context: IUserContext): Promise<IUserDocument | null> => {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { savedItems: itemData } },
+          { $push: { items: itemData } },
           { new: true }
         );
 
@@ -50,7 +50,7 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedItems: { itemId } } },
+          { $pull: { items: { itemId } } },
           { new: true }
         );
 
