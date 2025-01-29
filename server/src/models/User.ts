@@ -1,12 +1,12 @@
 import { Schema, model, type Document } from 'mongoose';
 import bcrypt from 'bcrypt';
-import { type ICollection, collectionSchema } from './Collection';
+import { type IItem, itemSchema } from './Item';
 
 interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  savedCollections: ICollection[];
+  savedItem: IItem[];
   isCorrectPassword(password: string): Promise<boolean>;
   // bookCount: number;
 }
@@ -28,7 +28,7 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
-    savedCollections: [collectionSchema],
+    savedItem: [itemSchema],
   }
   // set this to use virtual below
   // {
