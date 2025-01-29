@@ -1,4 +1,5 @@
-import User from './User.js';
-import Book from './Book.js';
+import User from './User';
+import Item from './Item';
+import Collection from './Collection';
 
-export { User, Book };
+export { User, Item, Collection };
