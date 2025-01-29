@@ -12,7 +12,7 @@ import {
 import { useMutation } from '@apollo/client';
 import { SAVE_BOOK } from '../utils/mutations';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
-import { Book } from '../models/Book';
+import { Book } from '../models/Item';
 import { GoogleAPIBook } from '../models/GoogleAPIBook';
 
 import Auth from '../utils/auth';
