@@ -4,5 +4,5 @@ export interface User {
   username: string;
   email: string;
   password: string;
-  savedItems: Item[];
+  items: Item[];
 }

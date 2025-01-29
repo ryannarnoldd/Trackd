@@ -25,12 +25,12 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_ITEM = gql`
-  mutation saveItem($itemData: ItemInput!) {
-    saveItem(itemData: $itemData) {
+  mutation addItem($itemData: ItemInput!) {
+    addItem(itemData: $itemData) {
       _id
       username
       email
-      savedItems {
+      items {
         itemId
         title
         description
@@ -48,7 +48,7 @@ export const REMOVE_item = gql`
       _id
       username
       email
-      savedItems {
+      items {
         itemId
         title
         description

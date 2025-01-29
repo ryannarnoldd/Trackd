@@ -32,8 +32,8 @@ import {
           <h2 className="pt-5">Items</h2>
           <div className="mb-4">
             <Row>
-              {userData.savedItems?.length ? (
-                userData.savedItems.map((movie: Item) => (
+              {userData.items?.length ? (
+                userData.items.map((movie: Item) => (
                   <Col md="3" key={movie.itemId}>
                     <Card border="dark">
                       {movie.image ? (

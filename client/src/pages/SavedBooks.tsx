@@ -15,7 +15,7 @@
 
 // import Auth from '../utils/auth';
 
-// const SavedItems = () => {
+// const items = () => {
 //   const { loading, data } = useQuery(QUERY_ME);
 //   const [removeBook] = useMutation(REMOVE_BOOK);
 
@@ -55,14 +55,14 @@
 //       </div>
 //       <Container>
 //         <h2 className='pt-5'>
-//           {userData.savedItems?.length
-//             ? `Viewing ${userData.savedItems.length} saved ${userData.savedItems.length === 1 ? 'book' : 'books'
+//           {userData.items?.length
+//             ? `Viewing ${userData.items.length} saved ${userData.items.length === 1 ? 'book' : 'books'
 //             }:`
 //             : 'You have no saved books!'}
 //         </h2>
 //         <div>
 //           <Row>
-//             {userData.savedItems?.map((book: Book) => {
+//             {userData.items?.map((book: Book) => {
 //               return (
 //                 <Col md="4">
 //                   <Card key={book.bookId} border="dark">
@@ -95,4 +95,4 @@
 //   );
 // };
 
-// export default SavedItems;
+// export default items;

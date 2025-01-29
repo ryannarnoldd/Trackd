@@ -5,7 +5,7 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String
-    savedItems: [Item]
+    items: [Item]
   }
 
   type Collection {
@@ -37,7 +37,7 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    saveItem(itemData: ItemInput!): User
+    addItem(itemData: ItemInput!): User
     removeItem(itemId: ID!): User
   }
 `;
