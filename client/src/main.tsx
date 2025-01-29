@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import App from './App.jsx'
 import Home from './pages/Home'
+import Profile from './pages/Profile.js'
 // import SavedBooks from './pages/SavedBooks'
 
 const router = createBrowserRouter([
@@ -16,10 +17,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />
       }, 
-      // {
-      //   path: '/saved',
-      //   element: <SavedBooks />
-      // }
+      {
+        path: '/profile',
+        element: <Profile />
+      }
     ]
   }
 ])
