@@ -1,9 +1,9 @@
-import type { IBook } from '../models/Collection.js';
+import type { IItem } from '../models/Item.js';
 export default interface IUserDocument {
   username: string | null;
   email: string | null;
   password: string | null;
-  savedBooks: IBook[];
+  savedItems: IItem[];
   isCorrectPassword(password: string): Promise<boolean>;
-  bookCount: number | null;
+ // bookCount: number | null;
 }
