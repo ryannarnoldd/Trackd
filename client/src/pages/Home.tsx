@@ -21,12 +21,6 @@ import {
     }
   
     return (
-      <>
-        <div className="text-light bg-dark p-5">
-          <Container>
-            <h1>Welcome to TrackD, {userData.username}!</h1>
-          </Container>
-        </div>
         <Container>
           {/* Items Section */}
           <h2 className="pt-5">Items</h2>
@@ -61,7 +55,6 @@ import {
             <Button className="btn-lg">+ Add New Collections</Button>
           </div>
         </Container>
-      </>
     );
   };
   
