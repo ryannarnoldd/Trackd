@@ -26,7 +26,7 @@ const collectionSchema = new Schema<ICollection>({
   image: {
     type: String,
   },
-  items: [itemSchema],
+  items: [{ type: Schema.Types.ObjectId, ref: 'Item' }],
 });
 
 const Collection = model<ICollection>('Collection', collectionSchema);

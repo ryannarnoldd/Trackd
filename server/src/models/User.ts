@@ -1,12 +1,14 @@
 import { Schema, model, type Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 import { type IItem, itemSchema } from './Item.js';
+import { ICollection } from './Collection'
 
 interface IUser extends Document {
   username: string;
   email: string;
   password: string;
   items: IItem[];
+  collections: ICollection[];
   isCorrectPassword(password: string): Promise<boolean>;
   // bookCount: number;
 }
@@ -29,6 +31,7 @@ const userSchema = new Schema<IUser>(
       required: true,
     },
     items: [itemSchema],
+    collections: [{ type: Schema.Types.ObjectId, ref: 'Collection' }],
   }
   // set this to use virtual below
   // {
