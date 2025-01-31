@@ -1,5 +1,5 @@
 import { Schema, model, type Document } from 'mongoose';
-import { type IItem, itemSchema } from './Item.js';
+import { type IItem } from './Item.js';
 
 
 interface ICollection extends Document {

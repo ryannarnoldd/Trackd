@@ -29,16 +29,27 @@ const typeDefs = gql`
     token: ID!
     user: User
   }
+  
+  input ItemInput {
+    name: String!
+    description: String
+    price: Float
+    condition: String
+    image: String
+  }
 
   type Query {
-    me: User
+    getCollections: [Collection]
+    getCollectionById(collectionId: ID!): Collection
+    getItemsInCollection(collectionId: ID!): [Item]
   }
 
   type Mutation {
-    login(email: String!, password: String!): Auth
+    createCollection(title: String!, description: String, image: String): Collection
+    addItemToCollection(collectionId: ID!, itemData: ItemInput!): Collection
+    removeItemFromCollection(collectionId: ID!, itemId: ID!): Collection
     addUser(username: String!, email: String!, password: String!): Auth
-    addItem(itemData: ItemInput!): User
-    removeItem(itemId: ID!): User
+    login(email: String!, password: String!): Auth
   }
 `;
 

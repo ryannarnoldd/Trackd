@@ -1,6 +1,6 @@
-import User from "../models/User";
-import Collection  from "../models/Collection";
-import Item  from "../models/Item";
+import User from "../models/User.js";
+import Collection  from "../models/Collection.js";
+import Item  from "../models/Item.js";
 import { signToken, AuthenticationError } from '../services/auth-service.js';
 
 const resolvers = {

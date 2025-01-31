@@ -1,5 +1,5 @@
-import User from "./User";
-import Item from "./Item";
-import Collection from "./Collection";
+import User from "./User.js";
+import Item from "./Item.js";
+import Collection from "./Collection.js";
 
 export { User, Item, Collection };

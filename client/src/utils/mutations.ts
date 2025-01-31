@@ -42,7 +42,7 @@ export const SAVE_ITEM = gql`
   }
 `;
 
-export const REMOVE_item = gql`
+export const REMOVE_ITEM = gql`
   mutation removeitem($itemId: ID!) {
     removeitem(itemId: $itemId) {
       _id
