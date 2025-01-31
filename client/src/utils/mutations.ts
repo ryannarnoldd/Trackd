@@ -59,3 +59,54 @@ export const REMOVE_ITEM = gql`
     }
   }
 `;
+
+export const CREATE_COLLECTION = gql `
+  mutation createCollection(title: String!, description: String, image: String) {
+   createCollection(title: String!, description: String, image: String){
+      collectionId
+        title
+        description
+        image
+        items {  
+          
+          itemId
+          title
+          description
+          price
+          condition
+          image
+        }}}`
+
+    export const ADD_ITEM_COLLECTION = gql `
+  mutation addItemToCollection(collectionId: ID!, itemData: ItemInput!) {
+   addItemToCollection(collectionId: ID!, itemData: ItemInput!){
+      collectionId
+        title
+        description
+        image
+        items {  
+          
+          itemId
+          title
+          description
+          price
+          condition
+          image
+       }}}`
+
+       export const REMOVE_ITEM_COLLECTION = gql `
+       mutation removeItemFromCollection(collectionId: ID!, itemId: ID!) {
+        removeItemFromCollection(collectionId: ID!, itemId: ID!){
+           collectionId
+             title
+             description
+             image
+             items {  
+               
+               itemId
+               title
+               description
+               price
+               condition
+               image
+            }}}`
