@@ -3,7 +3,6 @@ import { type IItem } from './Item.js';
 
 
 interface ICollection extends Document {
-  collectionId: string;
   title: string;
   description: string;
   image: string;
@@ -11,11 +10,11 @@ interface ICollection extends Document {
 }
 
 const collectionSchema = new Schema<ICollection>({
-  collectionId: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+  // collectionId: {
+  //   type: String,
+  //   required: true,
+  //   unique: true,
+  // },
   title: {
     type: String,
     required: true,

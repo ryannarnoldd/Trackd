@@ -5,6 +5,15 @@ import { signToken, AuthenticationError } from '../services/auth-service.js';
 
 const resolvers = {
   Query: {
+
+    me: async (_parent: any, _args: any, context: any) => {
+      if (context.user) {
+        const user = await User.findById(context.user._id).populate('collections').exec();
+        return user;
+      }
+      throw new AuthenticationError('User not authenticated');
+    },
+    
     // gets the current users collections
     getCollections: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
@@ -42,13 +51,28 @@ const resolvers = {
   Mutation: {
     // make a new collection
     createCollection: async (_parent: any, { title, description, image }: { title: string; description: string; image: string }, context: any) => {
-      if (context.user) {
-        const newCollection = new Collection({ title, description, image, user: context.user._id });
-        await newCollection.save();
-        await User.findByIdAndUpdate(context.user._id, { $push: { collections: newCollection._id } });
-        return newCollection;
+      if (!context.user) {
+        throw new AuthenticationError('User not authenticated');
       }
-      throw new AuthenticationError('User not authenticated');
+
+      try {
+        const newCollection = await Collection.create({
+          title,
+          description,
+          image,
+        });
+
+        // await User.findByIdAndUpdate(
+        //   context.user._id,
+        //   { $push: { collections: newCollection._id } },
+        //   { new: true }
+        // );
+
+        return newCollection;
+      } catch (error) {
+        console.error('Error creating collection:', error);
+        throw new Error('Failed to create collection');
+      }
     },
 
     // Add item to a collection

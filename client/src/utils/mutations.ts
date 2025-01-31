@@ -62,8 +62,8 @@ export const REMOVE_ITEM = gql`
 
 export const CREATE_COLLECTION = gql`
   mutation createCollection($title: String!, $description: String, $image: String) {
-    createCollection(title: title, description: description, image: image) {
-      collectionId
+    createCollection(title: $title, description: $description, image: $image) {
+      _id
       title
       description
       image
