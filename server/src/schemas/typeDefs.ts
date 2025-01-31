@@ -33,6 +33,14 @@ const typeDefs = gql`
   type Query {
     me: User
   }
+  
+  input ItemInput {
+    name: String!
+    description: String
+    price: Float
+    condition: String
+    image: String
+  }
 
   type Mutation {
     login(email: String!, password: String!): Auth
