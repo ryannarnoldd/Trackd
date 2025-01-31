@@ -5,7 +5,7 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String
-    items: [Item]
+    collections: [Collection]
   }
 
   type Collection {
