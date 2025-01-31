@@ -44,7 +44,7 @@ export const SAVE_ITEM = gql`
 
 export const REMOVE_ITEM = gql`
   mutation removeitem($itemId: ID!) {
-    removeitem(itemId: $itemId) {
+    getCollectionById(collectionId: ID!) {
       _id
       username
       email
