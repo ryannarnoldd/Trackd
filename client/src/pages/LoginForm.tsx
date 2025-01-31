@@ -9,7 +9,7 @@ import { LOGIN_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
-const LoginForm = ({}: { handleModalClose: () => void }) => {
+const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -101,6 +101,13 @@ const LoginForm = ({}: { handleModalClose: () => void }) => {
           variant="success"
         >
           Submit
+        </Button>
+        {/* Get a button that will redirect to signup. */}
+        <Button
+          variant="link"
+          href="/signup"
+        >
+          No account?
         </Button>
       </Form>
     </>
