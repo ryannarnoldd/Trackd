@@ -65,3 +65,19 @@ export const QUERY_CollectionById = gql`
   
 `;
 
+export const QUERY_ItemsInCollection = gql`
+   {
+    getItemsInCollection(collectionId: ID!) {
+      getItemsInCollection(collectionId: ID!) {
+        items {  
+          
+          itemId
+          title
+          description
+          price
+          condition
+          image
+       }
+      }
+    }
+  `;
