@@ -54,12 +54,3 @@ const typeDefs = gql`
 `;
 
 export default typeDefs;
-
-// input BookInput {
-//   authors: [String]
-//   description: String
-//   bookId: String!
-//   image: String
-//   link: String
-//   title: String!
-// }
