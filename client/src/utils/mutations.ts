@@ -43,8 +43,8 @@ export const SAVE_ITEM = gql`
 `;
 
 export const REMOVE_ITEM = gql`
-  mutation removeitem($itemId: ID!) {
-    getCollectionById(collectionId: ID!) {
+  mutation removeItemFromCollection($collectionId: ID!, $itemId: ID!) {
+    removeItemFromCollection(collectionId: $collectionId, itemId: $itemId) {
       _id
       username
       email
@@ -91,20 +91,3 @@ export const ADD_ITEM_COLLECTION = gql`
         condition
         image
     }}}`;
-
-export const REMOVE_ITEM_COLLECTION = gql `
-  mutation removeItemFromCollection(collectionId: ID!, itemId: ID!) {
-    removeItemFromCollection(collectionId: ID!, itemId: ID!){
-      collectionId
-        title
-        description
-        image
-        items {  
-               
-          itemId
-          title
-          description
-          price
-          condition
-          image
-}}}`;
