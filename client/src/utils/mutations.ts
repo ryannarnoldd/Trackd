@@ -24,9 +24,9 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_ITEM = gql`
-  mutation addItemToCollection($collectionId: ID!, $itemData: ItemInput!) {
-    addItemToCollection(collectionId: collectionId, itemData: itemData) {
+export const SAVE_ITEM = gql`
+  mutation addItem($itemData: ItemInput!) {
+    addItem(itemData: $itemData) {
       _id
       username
       email
@@ -43,8 +43,8 @@ export const ADD_ITEM = gql`
 `;
 
 export const REMOVE_ITEM = gql`
-  mutation removeItemFromCollection($collectionId: ID!, $itemId: ID!) {
-    removeItemFromCollection(collectionId: collectionId, itemId: itemId) {
+  mutation removeitem($itemId: ID!) {
+    getCollectionById(collectionId: ID!) {
       _id
       username
       email
@@ -62,8 +62,8 @@ export const REMOVE_ITEM = gql`
 
 export const CREATE_COLLECTION = gql`
   mutation createCollection($title: String!, $description: String, $image: String) {
-    createCollection(title: $title, description: $description, image: $image) {
-      _id
+    createCollection(title: $title, description: $description, image: $image) {  
+      collectionId
       title
       description
       image
@@ -74,14 +74,11 @@ export const CREATE_COLLECTION = gql`
         price
         condition
         image
-      }
-    }
-  }
-`;
+    }}}`;
 
 export const ADD_ITEM_COLLECTION = gql`
   mutation addItemToCollection($collectionId: ID!, $itemData: ItemInput!) {
-    addItemToCollection(collectionId: collectionId, itemData: itemData) {
+    addItemToCollection(collectionId: $collectionId, itemData: $itemData) {
       collectionId
       title
       description
@@ -93,26 +90,21 @@ export const ADD_ITEM_COLLECTION = gql`
         price
         condition
         image
-      }
-    }
-  }
-`;
+    }}}`;
 
-export const REMOVE_ITEM_COLLECTION = gql`
-  mutation removeItemFromCollection($collectionId: ID!, $itemId: ID!) {
-    removeItemFromCollection(collectionId: collectionId, itemId: itemId) {
+export const REMOVE_ITEM_COLLECTION = gql `
+  mutation removeItemFromCollection(collectionId: ID!, itemId: ID!) {
+    removeItemFromCollection(collectionId: ID!, itemId: ID!){
       collectionId
-      title
-      description
-      image
-      items {   
-        itemId
         title
         description
-        price
-        condition
         image
-      }
-    }
-  }
-`;
+        items {  
+               
+          itemId
+          title
+          description
+          price
+          condition
+          image
+}}}`;
