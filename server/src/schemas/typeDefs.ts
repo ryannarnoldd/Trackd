@@ -5,7 +5,7 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String
-    items: [Item]
+    collections: [Collection]
   }
 
   type Collection {
@@ -38,7 +38,14 @@ const typeDefs = gql`
     image: String
   }
 
+  input CollectionInput {
+    title: String!
+    description: String
+    image: String
+  }
+
   type Query {
+    me: User
     getCollections: [Collection]
     getCollectionById(collectionId: ID!): Collection
     getItemsInCollection(collectionId: ID!): [Item]

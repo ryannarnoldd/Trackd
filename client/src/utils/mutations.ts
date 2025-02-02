@@ -24,9 +24,9 @@ export const ADD_USER = gql`
   }
 `;
 
-export const SAVE_ITEM = gql`
-  mutation addItem($itemData: ItemInput!) {
-    addItem(itemData: $itemData) {
+export const ADD_ITEM = gql`
+  mutation addItemToCollection($collectionId: ID!, $itemData: ItemInput!) {
+    addItemToCollection(collectionId: collectionId, itemData: itemData) {
       _id
       username
       email
@@ -43,8 +43,8 @@ export const SAVE_ITEM = gql`
 `;
 
 export const REMOVE_ITEM = gql`
-  mutation removeitem($itemId: ID!) {
-    getCollectionById(collectionId: ID!) {
+  mutation removeItemFromCollection($collectionId: ID!, $itemId: ID!) {
+    removeItemFromCollection(collectionId: collectionId, itemId: itemId) {
       _id
       username
       email
@@ -60,53 +60,59 @@ export const REMOVE_ITEM = gql`
   }
 `;
 
-export const CREATE_COLLECTION = gql `
-  mutation createCollection(title: String!, description: String, image: String) {
-   createCollection(title: String!, description: String, image: String){
-      collectionId
+export const CREATE_COLLECTION = gql`
+  mutation createCollection($title: String!, $description: String, $image: String) {
+    createCollection(title: $title, description: $description, image: $image) {
+      _id
+      title
+      description
+      image
+      items {  
+        itemId
         title
         description
+        price
+        condition
         image
-        items {  
-          
-          itemId
-          title
-          description
-          price
-          condition
-          image
-        }}}`
+      }
+    }
+  }
+`;
 
-    export const ADD_ITEM_COLLECTION = gql `
-  mutation addItemToCollection(collectionId: ID!, itemData: ItemInput!) {
-   addItemToCollection(collectionId: ID!, itemData: ItemInput!){
+export const ADD_ITEM_COLLECTION = gql`
+  mutation addItemToCollection($collectionId: ID!, $itemData: ItemInput!) {
+    addItemToCollection(collectionId: collectionId, itemData: itemData) {
       collectionId
+      title
+      description
+      image
+      items {  
+        itemId
         title
         description
+        price
+        condition
         image
-        items {  
-          
-          itemId
-          title
-          description
-          price
-          condition
-          image
-       }}}`
+      }
+    }
+  }
+`;
 
-       export const REMOVE_ITEM_COLLECTION = gql `
-       mutation removeItemFromCollection(collectionId: ID!, itemId: ID!) {
-        removeItemFromCollection(collectionId: ID!, itemId: ID!){
-           collectionId
-             title
-             description
-             image
-             items {  
-               
-               itemId
-               title
-               description
-               price
-               condition
-               image
-            }}}`
+export const REMOVE_ITEM_COLLECTION = gql`
+  mutation removeItemFromCollection($collectionId: ID!, $itemId: ID!) {
+    removeItemFromCollection(collectionId: collectionId, itemId: itemId) {
+      collectionId
+      title
+      description
+      image
+      items {   
+        itemId
+        title
+        description
+        price
+        condition
+        image
+      }
+    }
+  }
+`;

@@ -1,20 +1,25 @@
-// see SignupForm.js for comments
-
 import { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-import type { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
+import { ADD_USER } from '../utils/mutations.js';
 
 import Auth from '../utils/auth';
 
-const LoginForm = ({}: { handleModalClose: () => void }) => {
-  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+const SignupForm = () => {
+  // set initial form state
+  const [userFormData, setUserFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+  // set state for form validation
   const [validated] = useState(false);
+  // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
-  const [login, { error }] = useMutation(LOGIN_USER);
+  const [addUser, { error }] = useMutation(ADD_USER);
 
   useEffect(() => {
     if (error) {
@@ -32,24 +37,25 @@ const LoginForm = ({}: { handleModalClose: () => void }) => {
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    // check if form has everything (as per react-bootstrap docs)
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
 
     try {
-      const { data } = await login({
+      const { data } = await addUser({
         variables: { ...userFormData },
       });
 
-      Auth.login(data.login.token);
-    } catch (e) {
-      console.error(e);
+      Auth.login(data.addUser.token);
+    } catch (err) {
+      console.error(err);
     }
 
-    // clear form values
     setUserFormData({
+      username: '',
       email: '',
       password: '',
     });
@@ -57,20 +63,38 @@ const LoginForm = ({}: { handleModalClose: () => void }) => {
 
   return (
     <>
+      {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        {/* show alert if server response is bad */}
         <Alert
           dismissible
           onClose={() => setShowAlert(false)}
           show={showAlert}
           variant="danger"
         >
-          Something went wrong with your login credentials!
+          Something went wrong with your signup!
         </Alert>
+
+        <Form.Group className='mb-3'>
+          <Form.Label htmlFor="username">Username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Your username"
+            name="username"
+            onChange={handleInputChange}
+            value={userFormData.username}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Username is required!
+          </Form.Control.Feedback>
+        </Form.Group>
+
         <Form.Group className='mb-3'>
           <Form.Label htmlFor="email">Email</Form.Label>
           <Form.Control
-            type="text"
-            placeholder="Your email"
+            type="email"
+            placeholder="Your email address"
             name="email"
             onChange={handleInputChange}
             value={userFormData.email}
@@ -96,7 +120,13 @@ const LoginForm = ({}: { handleModalClose: () => void }) => {
           </Form.Control.Feedback>
         </Form.Group>
         <Button
-          disabled={!(userFormData.email && userFormData.password)}
+          disabled={
+            !(
+              userFormData.username &&
+              userFormData.email &&
+              userFormData.password
+            )
+          }
           type="submit"
           variant="success"
         >
@@ -107,4 +137,4 @@ const LoginForm = ({}: { handleModalClose: () => void }) => {
   );
 };
 
-export default LoginForm;
+export default SignupForm;
