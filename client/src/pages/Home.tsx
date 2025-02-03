@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container, Button } from 'react-bootstrap';
+import { Container, Button, Card, Row, Col } from 'react-bootstrap';
 import CollectionForm from '../components/CollectionForm.js';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries.js';
@@ -14,44 +14,38 @@ const Home: React.FC = () => {
 
     return (
         <Container style={{ marginTop: '20px' }}>
-            <h1 className="text-center">Collections</h1>
+            <h1 className="text-center mb-4">My Collections</h1>
 
-            
+            {/* Loading State */}
+            {loading && <h2 className="text-center">Loading...</h2>}
+            {error && <h2 className="text-center text-danger">Error: {error.message}</h2>}
 
-            {/* Display the list of collections in cards with title, description, and image */}
-            {/* If there are no collections, display a message saying so */}
-            {/* If there is an error, display an error message */}
-            {/* If the data is loading, display a loading message */}
-
-            {loading ? (
-                <h2>Loading...</h2>
-            ) : error ? (
-                <h2>Error: {error.message}</h2>
-            ) : data.me.collections.length ? (
-                data.me.collections.map((collection: any) => (
-                    <div key={collection._id} className="card mb-3">
-                        <div className="row g-0">
-                            <div className="col-md-4">
-                                <img src={collection.image} alt={collection.title} style={{ width: '100%' }} />
-                            </div>
-                            <div className="col-md-8">
-                                <div className="card-body">
-                                    <h5 className="card-title">{collection.title}</h5>
-                                    <p className="card-text">{collection.description}</p>
+            {/* Display collections or no collections message */}
+            {data?.me?.collections?.length > 0 ? (
+                <Row>
+                    {data.me.collections.map((collection: any) => (
+                        <Col md={4} key={collection._id} className="mb-4">
+                            <Card>
+                                <Card.Img variant="top" src={collection.image} alt={collection.title} />
+                                <Card.Body>
+                                    <Card.Title>{collection.title}</Card.Title>
+                                    <Card.Text>{collection.description}</Card.Text>
                                     <Button variant="primary">View Collection</Button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ))
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
             ) : (
-                <h2>No collections found</h2>
+                <h2 className="text-center">No collections found</h2>
             )}
 
+            {/* Add New Collection Button */}
             <div className="text-center mt-5">
-                <Button className="btn-lg" onClick={() => setShowModal(true)}>+ Add New Collection</Button>
+                <Button onClick={() => setShowModal(true)} variant="success">+ Add New Collection</Button>
             </div>
 
+            {/* Modal for adding collection */}
             <CollectionForm showModal={showModal} handleClose={() => setShowModal(false)} />
         </Container>
     );
