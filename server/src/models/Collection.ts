@@ -1,6 +1,5 @@
 import { Schema, model, type Document } from 'mongoose';
-import { type IItem } from './Item.js';
-
+import { IItem } from './Item.js';
 
 interface ICollection extends Document {
   title: string;
@@ -10,11 +9,6 @@ interface ICollection extends Document {
 }
 
 const collectionSchema = new Schema<ICollection>({
-  // collectionId: {
-  //   type: String,
-  //   required: true,
-  //   unique: true,
-  // },
   title: {
     type: String,
     required: true,

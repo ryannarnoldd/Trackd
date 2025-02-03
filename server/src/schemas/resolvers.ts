@@ -58,23 +58,19 @@ const resolvers = {
       try {
         const newCollection = await Collection.create({
           title,
-          description: description || '',
+          description,
           image,
         });
+
+        // add under user.
+        await User.findByIdAndUpdate(
+          context.user._id,
+          { $push: { collections: newCollection._id } },
+          { new: true }
+        );
     
-        const populatedCollection = await Collection.findById(newCollection._id).populate('items');
-    
-        if (!populatedCollection) {
-          throw new Error('Collection not found');
-        }
-    
-        return {
-          collectionId: populatedCollection._id,
-          title: populatedCollection.title,
-          description: populatedCollection.description,
-          image: populatedCollection.image,
-          items: populatedCollection.items,
-        };
+        return newCollection;
+
       } catch (error) {
         console.error('Error creating collection:', error);
         throw new Error('Failed to create collection');

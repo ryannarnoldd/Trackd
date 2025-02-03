@@ -26,7 +26,7 @@ const CollectionForm = ({ showModal }: CollectionFormProps) => {
             )
             await createCollection({ 
                 variables: { 
-                    title: formData.title, 
+                    title: formData.title,
                     description: formData.description, 
                     image: formData.image
                 }

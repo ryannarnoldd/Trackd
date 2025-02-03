@@ -1,7 +1,6 @@
 import { Schema, model, type Document } from 'mongoose';
 
 interface IItem extends Document {
-    itemId: string;
     title: string;
     description: string;
     price: number;
@@ -10,11 +9,6 @@ interface IItem extends Document {
 }
 
 const itemSchema = new Schema<IItem>({
-    itemId: {
-        type: String,
-        required: true,
-        unique: true,
-    },
     title: {
         type: String,
         required: true,

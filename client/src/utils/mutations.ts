@@ -19,6 +19,8 @@ export const ADD_USER = gql`
       user {
         _id
         username
+        email
+        password
       }
     }
   }
@@ -63,18 +65,11 @@ export const REMOVE_ITEM = gql`
 export const CREATE_COLLECTION = gql`
   mutation createCollection($title: String!, $description: String, $image: String) {
     createCollection(title: $title, description: $description, image: $image) {  
-      collectionId
+      _id
       title
       description
       image
-      items {  
-        _id
-        title
-        description
-        price
-        condition
-        image
-    }}}`;
+}}`;
 
 export const ADD_ITEM_COLLECTION = gql`
   mutation addItemToCollection($collectionId: ID!, $itemData: ItemInput!) {
