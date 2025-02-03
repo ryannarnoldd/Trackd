@@ -68,7 +68,7 @@ export const CREATE_COLLECTION = gql`
       description
       image
       items {  
-        itemId
+        _id
         title
         description
         price

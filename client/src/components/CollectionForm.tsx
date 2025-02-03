@@ -24,7 +24,13 @@ const CollectionForm = ({ showModal }: CollectionFormProps) => {
                 'formData',
                 formData
             )
-            await createCollection({ variables: { ...formData } });
+            await createCollection({ 
+                variables: { 
+                    title: formData.title, 
+                    description: formData.description, 
+                    image: formData.image
+                }
+            });
             console.log('collection created');
             setFormData({ title: '', description: '', image: '' });
         } catch (err) {

@@ -10,7 +10,7 @@ const typeDefs = gql`
 
   type Collection {
     _id: ID!
-    name: String!
+    title: String!
     description: String
     image: String
     items: [Item]
