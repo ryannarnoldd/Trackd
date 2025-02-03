@@ -52,7 +52,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createCollection(title: String!, description: String, image: String): Collection
+    createCollection(title: String!, description: String, image: String): Collection!
     addItemToCollection(collectionId: ID!, itemData: ItemInput!): Collection
     removeItemFromCollection(collectionId: ID!, itemId: ID!): Collection
     addUser(username: String!, email: String!, password: String!): Auth
