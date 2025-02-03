@@ -10,7 +10,7 @@ import db from './config/connection.js';
 const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
   typeDefs,
-  resolvers,
+  resolvers
 });
 
 const app = express();

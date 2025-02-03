@@ -45,7 +45,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    me: User
+    me: User!
     getCollections: [Collection]
     getCollectionById(collectionId: ID!): Collection
     getItemsInCollection(collectionId: ID!): [Item]
