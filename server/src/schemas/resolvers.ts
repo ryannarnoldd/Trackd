@@ -54,21 +54,27 @@ const resolvers = {
       if (!context.user) {
         throw new AuthenticationError('User not authenticated');
       }
-
+    
       try {
         const newCollection = await Collection.create({
           title,
-          description,
+          description: description || '',
           image,
         });
-
-        // await User.findByIdAndUpdate(
-        //   context.user._id,
-        //   { $push: { collections: newCollection._id } },
-        //   { new: true }
-        // );
-
-        return newCollection;
+    
+        const populatedCollection = await Collection.findById(newCollection._id).populate('items');
+    
+        if (!populatedCollection) {
+          throw new Error('Collection not found');
+        }
+    
+        return {
+          collectionId: populatedCollection._id,
+          title: populatedCollection.title,
+          description: populatedCollection.description,
+          image: populatedCollection.image,
+          items: populatedCollection.items,
+        };
       } catch (error) {
         console.error('Error creating collection:', error);
         throw new Error('Failed to create collection');
@@ -78,18 +84,29 @@ const resolvers = {
     // Add item to a collection
     addItemToCollection: async (_parent: any, { collectionId, itemData }: { collectionId: string; itemData: any }, context: any) => {
       if (context.user) {
+
         const item = new Item(itemData); 
         await item.save();
-
-        
+    
         const updatedCollection = await Collection.findByIdAndUpdate(
           collectionId,
           { $push: { items: item._id } },
           { new: true }
-        );
-
-        return updatedCollection;
+        ).populate('items');
+    
+        if (!updatedCollection) {
+          throw new Error('Collection not found');
+        }
+    
+        return {
+          collectionId: updatedCollection._id,
+          title: updatedCollection.title,
+          description: updatedCollection.description,
+          image: updatedCollection.image,
+          items: updatedCollection.items,
+        };
       }
+    
       throw new AuthenticationError('User not authenticated');
     },
 
