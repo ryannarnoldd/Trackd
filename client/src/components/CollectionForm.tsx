@@ -16,23 +16,19 @@ const CollectionForm = ({ showModal }: CollectionFormProps) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-
+// 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            console.log(
-                'formData',
-                formData
-            )
             await createCollection({ 
                 variables: { 
-                    title: formData.title, 
+                    title: formData.title,
                     description: formData.description, 
                     image: formData.image
                 }
             });
-            console.log('collection created');
-            setFormData({ title: '', description: '', image: '' });
+
+            window.location.reload();
         } catch (err) {
             console.error(err);
         }
@@ -40,7 +36,7 @@ const CollectionForm = ({ showModal }: CollectionFormProps) => {
 
     return (
         <Modal show={showModal} >
-            <Modal.Header closeButton>
+            <Modal.Header>
                 <Modal.Title>Add New Collection</Modal.Title>
             </Modal.Header>
             <Modal.Body>

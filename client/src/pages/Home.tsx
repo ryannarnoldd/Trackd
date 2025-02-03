@@ -1,35 +1,51 @@
 import { useState } from 'react';
-import { Container, Card, Button, Modal, Form } from 'react-bootstrap';
-import { useMutation } from '@apollo/client';
-import { CREATE_COLLECTION } from '../utils/mutations.js';
+import { Container, Button, Card, Row, Col } from 'react-bootstrap';
 import CollectionForm from '../components/CollectionForm.js';
+import { useQuery } from '@apollo/client';
+import { QUERY_ME } from '../utils/queries.js';
 
-const Home = () => {
+const Home: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
-    // const [formData, setFormData] = useState({ title: '', description: '', image: '' });
-    // const [createCollection] = useMutation(CREATE_COLLECTION);
+    const { data, loading, error } = useQuery(QUERY_ME);
 
-    // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const { name, value } = e.target;
-    //     setFormData({ ...formData, [name]: value });
-    // };
-
-    // const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     try {
-    //         await createCollection({ variables: { ...formData } });
-    //         setShowModal(false);
-    //         setFormData({ title: '', description: '', image: '' });
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // };
+    console.log("Loading:", loading);
+    console.log("Error:", error);
+    console.log("Data:", data);
 
     return (
         <Container style={{ marginTop: '20px' }}>
+            <h1 className="text-center mb-4">My Collections</h1>
+
+            {/* Loading State */}
+            {loading && <h2 className="text-center">Loading...</h2>}
+            {error && <h2 className="text-center text-danger">Error: {error.message}</h2>}
+
+            {/* Display collections or no collections message */}
+            {data?.me?.collections?.length > 0 ? (
+                <Row>
+                    {data.me.collections.map((collection: any) => (
+                        <Col md={4} key={collection._id} className="mb-4">
+                            <Card>
+                                <Card.Img variant="top" src={collection.image} alt={collection.title} />
+                                <Card.Body>
+                                    <Card.Title>{collection.title}</Card.Title>
+                                    <Card.Text>{collection.description}</Card.Text>
+                                    <Button variant="primary">View Collection</Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
+            ) : (
+                <h2 className="text-center">No collections found</h2>
+            )}
+
+            {/* Add New Collection Button */}
             <div className="text-center mt-5">
-                <Button className="btn-lg" onClick={() => setShowModal(true)}>+ Add New Collections</Button>
+                <Button onClick={() => setShowModal(true)} variant="success">+ Add New Collection</Button>
             </div>
+
+            {/* Modal for adding collection */}
             <CollectionForm showModal={showModal} handleClose={() => setShowModal(false)} />
         </Container>
     );

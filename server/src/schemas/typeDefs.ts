@@ -45,14 +45,14 @@ const typeDefs = gql`
   }
 
   type Query {
-    me: User
+    me: User!
     getCollections: [Collection]
     getCollectionById(collectionId: ID!): Collection
     getItemsInCollection(collectionId: ID!): [Item]
   }
 
   type Mutation {
-    createCollection(title: String!, description: String, image: String): Collection
+    createCollection(title: String!, description: String, image: String): Collection!
     addItemToCollection(collectionId: ID!, itemData: ItemInput!): Collection
     removeItemFromCollection(collectionId: ID!, itemId: ID!): Collection
     addUser(username: String!, email: String!, password: String!): Auth

@@ -7,36 +7,45 @@ const resolvers = {
   Query: {
 
     me: async (_parent: any, _args: any, context: any) => {
-      if (context.user) {
+      console.log('context:', context.user);
+      
+      // Correctly access the _id from context.user
+      if (context.user && context.user._id) {
         const user = await User.findById(context.user._id).populate('collections').exec();
         return user;
       }
-      throw new AuthenticationError('User not authenticated');
-    },
+      throw new AuthenticationError('User! not authenticated3');
+    },  
+    
+    
     
     // gets the current users collections
-    getCollections: async (_parent: any, _args: any, context: any) => {
-      if (context.user) {
+    // getCollections: async (_parent: any, _args: any, context: any) => {
+    //   console.log('im here:');
+    //   if (context.user) {
+    //     // JUST print the user ID.
+    //     console.log('User ID:', context.user["_id"]);
+    //     const user = await User.findById(context.user._id).populate('collections').exec();
         
-        const user = await User.findById(context.user._id).populate('collections').exec();
+    //     if (user) {
+    //       return user.collections;
+    //     } else {
+    //       throw new AuthenticationError('User not found');
+    //     }
 
-        if (user) {
-          return user.collections;
-        } else {
-          throw new AuthenticationError('User not found');
-        }
-      }
-      throw new AuthenticationError('User not authenticated');
-    },
+    //   }
+    //   console.log('out here');
+    //   throw new AuthenticationError('User not authenticated3');
+    // },
 
     // get a specific collection by id #
-    getCollectionById: async (_parent: any, { collectionId }: { collectionId: string }, context: any) => {
-      if (context.user) {
-        const collection = await Collection.findById(collectionId).exec();
-        return collection;
-      }
-      throw new AuthenticationError('User not authenticated');
-    },
+    // getCollectionById: async (_parent: any, { collectionId }: { collectionId: string }, context: any) => {
+    //   if (context.user) {
+    //     const collection = await Collection.findById(collectionId).exec();
+    //     return collection;
+    //   }
+    //   throw new AuthenticationError('User not authenticated3');
+    // },
 
     // get all items from a collection
     getItemsInCollection: async (_parent: any, { collectionId }: { collectionId: string }, context: any) => {
@@ -44,7 +53,7 @@ const resolvers = {
         const collection = await Collection.findById(collectionId).populate('items').exec();
         return collection?.items;
       }
-      throw new AuthenticationError('User not authenticated');
+      throw new AuthenticationError('User not authenticated3');
     },
   },
 
@@ -52,29 +61,25 @@ const resolvers = {
     // make a new collection
     createCollection: async (_parent: any, { title, description, image }: { title: string; description: string; image: string }, context: any) => {
       if (!context.user) {
-        throw new AuthenticationError('User not authenticated');
+        throw new AuthenticationError('User not authenticated3');
       }
     
       try {
         const newCollection = await Collection.create({
           title,
-          description: description || '',
+          description,
           image,
         });
+
+        // add under user.
+        await User.findByIdAndUpdate(
+          context.user._id,
+          { $push: { collections: newCollection._id } },
+          { new: true }
+        );
     
-        const populatedCollection = await Collection.findById(newCollection._id).populate('items');
-    
-        if (!populatedCollection) {
-          throw new Error('Collection not found');
-        }
-    
-        return {
-          collectionId: populatedCollection._id,
-          title: populatedCollection.title,
-          description: populatedCollection.description,
-          image: populatedCollection.image,
-          items: populatedCollection.items,
-        };
+        return newCollection;
+
       } catch (error) {
         console.error('Error creating collection:', error);
         throw new Error('Failed to create collection');
@@ -107,7 +112,7 @@ const resolvers = {
         };
       }
     
-      throw new AuthenticationError('User not authenticated');
+      throw new AuthenticationError('User not authenticated3');
     },
 
     // deletes an item from a collection
@@ -121,7 +126,7 @@ const resolvers = {
 
         return updatedCollection;
       }
-      throw new AuthenticationError('User not authenticated');
+      throw new AuthenticationError('User not authenticated3');
     },
 
     // add a user

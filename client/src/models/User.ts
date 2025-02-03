@@ -1,8 +1,8 @@
-import type { Item } from './Item';
+import type { Collection } from './Collection.js';
 
 export interface User {
   username: string;
   email: string;
   password: string;
-  items: Item[];
+  collections: Collection[];
 }
