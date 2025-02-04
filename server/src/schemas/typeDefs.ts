@@ -52,13 +52,13 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createCollection(title: String!, description: String, image: String): Collection!
-    addItemToCollection(collectionId: ID!, name: String!, description: String, price: Float): Collection!
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    createCollection(title: String!, description: String, image: String): Collection!
+    deleteCollection(collectionId: ID!): Collection!
+    deleteItem(collectionId: ID!, itemId: ID!): Collection!
+    addItem(collectionId: ID!, name: String!, description: String, price: Float): Collection!
   }
 `;
 
 export default typeDefs;
-
-//     removeItemFromCollection(collectionId: ID!, itemId: ID!): Collection

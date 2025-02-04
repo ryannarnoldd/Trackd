@@ -55,15 +55,27 @@ export const CREATE_COLLECTION = gql`
   mutation createCollection($title: String!, $description: String, $image: String) {
     createCollection(title: $title, description: $description, image: $image) {  
       _id
-      title
-      description
-      image
 }}`;
 
-export const ADD_ITEM_COLLECTION = gql`
-  mutation addItemToCollection($collectionId: ID!, $name: String!, $description: String, $price: Float) {
-    addItemToCollection(collectionId: $collectionId, name: $name, description: $description, price: $price) {
+export const DELETE_COLLECTION = gql`
+  mutation deleteCollection($collectionId: ID!) {
+    deleteCollection(collectionId: $collectionId) {
+      _id
+    }
+  }
+`;
+
+export const ADD_ITEM = gql`
+  mutation addItem($collectionId: ID!, $name: String!, $description: String, $price: Float) {
+    addItem(collectionId: $collectionId, name: $name, description: $description, price: $price) {
       _id
       items {  
         _id
 }}}`;
+
+export const DELETE_ITEM = gql`
+  mutation deleteItem($collectionId: ID!, $itemId: ID!) {
+    deleteItem(collectionId: $collectionId, itemId: $itemId) {
+      _id
+    }
+  }`;

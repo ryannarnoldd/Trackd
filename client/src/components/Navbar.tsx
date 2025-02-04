@@ -9,9 +9,25 @@ const AppNavbar = () => {
       <Container fluid>
         <Navbar.Brand as={Link} to="/"> Trackd </Navbar.Brand>
 
-        <Nav> <Nav.Link as={Link} to={location.pathname === '/' ? '/profile' : '/'}>
-          {location.pathname === '/' ? 'My Profile' : 'Home'}
-        </Nav.Link> </Nav>
+        <Nav> 
+
+        {/* If path is /signup or /login, show only two buttons Signup and Login.
+          If the path is /profile, show only one button Home.
+          And if the path is /, show only one button My Profile.
+        */}
+        
+        {location.pathname === '/signup' || location.pathname === '/login' ? (
+          <>
+            <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
+            <Nav.Link as={Link} to="/login">Login</Nav.Link>
+          </>
+        ) : location.pathname === '/profile' ? (
+          <Nav.Link as={Link} to="/">Home</Nav.Link>
+        ) : (
+          <Nav.Link as={Link} to="/profile">My Profile</Nav.Link>
+        )}
+
+        </Nav>
       </Container>
     </Navbar>
 
