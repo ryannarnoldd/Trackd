@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Container, Button, Card, Row, Col } from 'react-bootstrap';
 import CollectionForm from '../components/CollectionForm.js';
+import ItemForm from '../components/ItemForm.js';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries.js';
 
 const Home: React.FC = () => {
-    const [showModal, setShowModal] = useState(false);
+    const [showCollectionModal, setShowCollectionModal] = useState(false);
+    const [showItemModal, setShowItemModal] = useState(false);
     const { data, loading, error } = useQuery(QUERY_ME);
 
     console.log("Loading:", loading);
@@ -28,9 +30,23 @@ const Home: React.FC = () => {
                             <Card>
                                 <Card.Img variant="top" src={collection.image} alt={collection.title} />
                                 <Card.Body>
-                                    <Card.Title>{collection.title}</Card.Title>
+                                    <Card.Title>{collection.title} ${100}</Card.Title>
                                     <Card.Text>{collection.description}</Card.Text>
-                                    <Button variant="primary">View Collection</Button>
+                                    {/* Print all the items. */}
+                                    <ul>
+                                        {collection.items.map((item: any) => (
+                                           <b><li key={item._id}>{item.name} (${item.price})</li></b>
+                                        ))}
+                                        </ul>
+                                    
+                                    
+                                    <div className="text-center mt-5">
+                                        <Button onClick={() => setShowItemModal(true)} variant="success">+ Add New Item</Button>
+                                    </div>
+
+                                    {/* Modal for adding collection */}
+                                    <ItemForm showModal={showItemModal} handleClose={() => setShowItemModal(false)} collectionId={collection._id} />
+
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -42,11 +58,11 @@ const Home: React.FC = () => {
 
             {/* Add New Collection Button */}
             <div className="text-center mt-5">
-                <Button onClick={() => setShowModal(true)} variant="success">+ Add New Collection</Button>
+                <Button onClick={() => setShowCollectionModal(true)} variant="success">+ Add New Collection</Button>
             </div>
 
             {/* Modal for adding collection */}
-            <CollectionForm showModal={showModal} handleClose={() => setShowModal(false)} />
+            <CollectionForm showModal={showCollectionModal} handleClose={() => setShowCollectionModal(false)} />
         </Container>
     );
 };

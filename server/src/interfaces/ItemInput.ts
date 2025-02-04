@@ -1,5 +1,5 @@
 export default interface IItemInput {
-  title: string | null;
+  name: string | "Empty Item";
   description?: string | null;
   price?: number | null;
   condition?: string | null;

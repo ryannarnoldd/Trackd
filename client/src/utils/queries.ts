@@ -7,9 +7,15 @@ export const QUERY_ME = gql`
       username
       email
       collections {
+        _id
         title
         description
         image
+        items {
+          _id
+          name
+          price
+        }
       }
     }
   }

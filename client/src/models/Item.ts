@@ -1,7 +1,7 @@
 export interface Item {
-  title: string;
+  name: string;
   description: string;
-  // price: number;
+  price: number;
   // condition: string;
-  image: string;
+  // image: string;
 }
