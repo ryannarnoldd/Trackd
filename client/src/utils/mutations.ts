@@ -26,41 +26,31 @@ export const ADD_USER = gql`
   }
 `;
 
-export const SAVE_ITEM = gql`
-  mutation addItem($itemData: ItemInput!) {
-    addItem(itemData: $itemData) {
-      _id
-      username
-      email
-      items {
-        itemId
-        title
-        description
-        price
-        condition
-        image
-      }
-    }
-  }
-`;
+// export const SAVE_ITEM = gql`
+//   mutation addItem($itemData: ItemInput!) {
+//     addItem(itemData: $itemData) {
+//       _id
+//     }
+//   }
+// `;
 
-export const REMOVE_ITEM = gql`
-  mutation removeItemFromCollection($collectionId: ID!, $itemId: ID!) {
-    removeItemFromCollection(collectionId: $collectionId, itemId: $itemId) {
-      _id
-      username
-      email
-      items {
-        itemId
-        title
-        description
-        price
-        condition
-        image
-      }
-    }
-  }
-`;
+// export const REMOVE_ITEM = gql`
+//   mutation removeItemFromCollection($collectionId: ID!, $itemId: ID!) {
+//     removeItemFromCollection(collectionId: $collectionId, itemId: $itemId) {
+//       _id
+//       username
+//       email
+//       items {
+//         itemId
+//         title
+//         description
+//         price
+//         condition
+//         image
+//       }
+//     }
+//   }
+// `;
 
 export const CREATE_COLLECTION = gql`
   mutation createCollection($title: String!, $description: String, $image: String) {
@@ -72,17 +62,9 @@ export const CREATE_COLLECTION = gql`
 }}`;
 
 export const ADD_ITEM_COLLECTION = gql`
-  mutation addItemToCollection($collectionId: ID!, $itemData: ItemInput!) {
-    addItemToCollection(collectionId: $collectionId, itemData: $itemData) {
-      collectionId
-      title
-      description
-      image
+  mutation addItemToCollection($collectionId: ID!, $name: String!, $description: String, $price: Float) {
+    addItemToCollection(collectionId: $collectionId, name: $name, description: $description, price: $price) {
+      _id
       items {  
-        itemId
-        title
-        description
-        price
-        condition
-        image
-    }}}`;
+        _id
+}}}`;

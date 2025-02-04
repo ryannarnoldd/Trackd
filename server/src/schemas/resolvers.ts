@@ -7,11 +7,10 @@ const resolvers = {
   Query: {
 
     me: async (_parent: any, _args: any, context: any) => {
-      console.log('context:', context.user);
       
-      // Correctly access the _id from context.user
+      // Return the user with the collections populated and the items populated under collections in one object.
       if (context.user && context.user._id) {
-        const user = await User.findById(context.user._id).populate('collections').exec();
+        const user = await User.findById(context.user._id).populate({ path: 'collections', populate: { path: 'items' } }).exec();
         return user;
       }
       throw new AuthenticationError('User! not authenticated3');
@@ -48,13 +47,13 @@ const resolvers = {
     // },
 
     // get all items from a collection
-    getItemsInCollection: async (_parent: any, { collectionId }: { collectionId: string }, context: any) => {
-      if (context.user) {
-        const collection = await Collection.findById(collectionId).populate('items').exec();
-        return collection?.items;
-      }
-      throw new AuthenticationError('User not authenticated3');
-    },
+    // getItemsInCollection: async (_parent: any, { collectionId }: { collectionId: string }, context: any) => {
+    //   if (context.user) {
+    //     const collection = await Collection.findById(collectionId).populate('items').exec();
+    //     return collection?.items;
+    //   }
+    //   throw new AuthenticationError('User not authenticated3');
+    // },
   },
 
   Mutation: {
@@ -87,47 +86,60 @@ const resolvers = {
     },
 
     // Add item to a collection
-    addItemToCollection: async (_parent: any, { collectionId, itemData }: { collectionId: string; itemData: any }, context: any) => {
+    addItemToCollection: async (_parent: any, { collectionId, name, description, price }: { collectionId: string; name: string; description: string; price: number }, context: any) => {
       if (context.user) {
 
-        const item = new Item(itemData); 
+        console.log('collectionId:', collectionId);
+
+        const item = new Item({
+          name,
+          description,
+          price,
+        });
         await item.save();
+
+        console.log('item:', item);
     
-        const updatedCollection = await Collection.findByIdAndUpdate(
+        const newCollection = await Collection.findByIdAndUpdate(
           collectionId,
           { $push: { items: item._id } },
           { new: true }
-        ).populate('items');
+        );
+
+        console.log('newCollection:', newCollection);
     
-        if (!updatedCollection) {
-          throw new Error('Collection not found');
-        }
+        // if (!updatedCollection) {
+        //   throw new Error('Collection not found');
+        // }
     
-        return {
-          collectionId: updatedCollection._id,
-          title: updatedCollection.title,
-          description: updatedCollection.description,
-          image: updatedCollection.image,
-          items: updatedCollection.items,
-        };
+        // return {
+        //   collectionId: updatedCollection._id,
+        //   title: updatedCollection.title,
+        //   description: updatedCollection.description,
+        //   image: updatedCollection.image,
+        //   items: updatedCollection.items,
+        // };
+
+        return newCollection
+
       }
     
       throw new AuthenticationError('User not authenticated3');
     },
 
     // deletes an item from a collection
-    removeItemFromCollection: async (_parent: any, { collectionId, itemId }: { collectionId: string; itemId: string }, context: any) => {
-      if (context.user) {
-        const updatedCollection = await Collection.findByIdAndUpdate(
-          collectionId,
-          { $pull: { items: itemId } },
-          { new: true }
-        );
+    // removeItemFromCollection: async (_parent: any, { collectionId, itemId }: { collectionId: string; itemId: string }, context: any) => {
+    //   if (context.user) {
+    //     const updatedCollection = await Collection.findByIdAndUpdate(
+    //       collectionId,
+    //       { $pull: { items: itemId } },
+    //       { new: true }
+    //     );
 
-        return updatedCollection;
-      }
-      throw new AuthenticationError('User not authenticated3');
-    },
+    //     return updatedCollection;
+    //   }
+    //   throw new AuthenticationError('User not authenticated3');
+    // },
 
     // add a user
     addUser: async (_parent: any, args: any) => {

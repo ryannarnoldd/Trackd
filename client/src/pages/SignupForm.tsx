@@ -45,13 +45,13 @@ const SignupForm = () => {
     // }
 
     try {
-      const { data } = await addUser({
-        variables: {
-          username: userFormData.username,
-          email: userFormData.email,
-          password: userFormData.password,
-        },
-      });
+
+      console.log('user:', userFormData);
+      const { data } = await addUser( { variables: { 
+        username: userFormData.username,
+        email: userFormData.email,
+        password: userFormData.password
+       }});
 
       Auth.login(data.addUser.token);
     } catch (err) {

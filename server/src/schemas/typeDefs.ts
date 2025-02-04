@@ -27,7 +27,7 @@ const typeDefs = gql`
 
   type Auth {
     token: ID!
-    user: User
+    user: User!
   }
   
   input ItemInput {
@@ -53,11 +53,12 @@ const typeDefs = gql`
 
   type Mutation {
     createCollection(title: String!, description: String, image: String): Collection!
-    addItemToCollection(collectionId: ID!, itemData: ItemInput!): Collection
-    removeItemFromCollection(collectionId: ID!, itemId: ID!): Collection
+    addItemToCollection(collectionId: ID!, name: String!, description: String, price: Float): Collection!
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
   }
 `;
 
 export default typeDefs;
+
+//     removeItemFromCollection(collectionId: ID!, itemId: ID!): Collection
