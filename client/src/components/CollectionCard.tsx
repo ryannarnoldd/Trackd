@@ -52,7 +52,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ collection }) => {
           {collection.items.map((item) => (
             <b key={item._id}>
               {/* Add a small tiny X button that will delete the item. */}
-              <li> {item.name} ${item.price}
+              <li> {item.name} {item.price > 0 ? `($${item.price})` : ''}{' '}
                 <Button onClick={async () => {
                   await deleteItem({ variables: { collectionId: collection._id, itemId: item._id } })
                 }} variant="danger">X</Button>
