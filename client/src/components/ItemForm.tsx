@@ -1,7 +1,7 @@
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_ITEM_COLLECTION } from '../utils/mutations.js';
+import { ADD_ITEM } from '../utils/mutations.js';
 import { QUERY_ME } from '../utils/queries.js';
 
 interface ItemFormProps {
@@ -12,7 +12,7 @@ interface ItemFormProps {
 
 const ItemForm = ({ collectionId, showModal }: ItemFormProps) => {
     const [formData, setFormData] = useState({ name: '', description: '', price: '' });
-    const [addItem] = useMutation(ADD_ITEM_COLLECTION, { refetchQueries: [QUERY_ME, 'Me'] });
+    const [addItem] = useMutation(ADD_ITEM, { refetchQueries: [QUERY_ME, 'Me'] });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

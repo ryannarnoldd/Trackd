@@ -85,8 +85,18 @@ const resolvers = {
       }
     },
 
-    // Add item to a collection
-    addItemToCollection: async (_parent: any, { collectionId, name, description, price }: { collectionId: string; name: string; description: string; price: number }, context: any) => {
+    deleteCollection: async (_parent: any, { collectionId }: { collectionId: string }, context: any) => {
+      if (context.user) {
+        
+        const deletedCollection = await Collection.findByIdAndDelete(collectionId).exec();
+    
+        return deletedCollection;
+
+      }
+      throw new AuthenticationError('User not authenticated');
+    },
+
+    addItem: async (_parent: any, { collectionId, name, description, price }: { collectionId: string; name: string; description: string; price: number }, context: any) => {
       if (context.user) {
 
         console.log('collectionId:', collectionId);
@@ -96,29 +106,13 @@ const resolvers = {
           description,
           price,
         });
-        await item.save();
 
-        console.log('item:', item);
-    
+        await item.save();
         const newCollection = await Collection.findByIdAndUpdate(
           collectionId,
           { $push: { items: item._id } },
           { new: true }
-        );
-
-        console.log('newCollection:', newCollection);
-    
-        // if (!updatedCollection) {
-        //   throw new Error('Collection not found');
-        // }
-    
-        // return {
-        //   collectionId: updatedCollection._id,
-        //   title: updatedCollection.title,
-        //   description: updatedCollection.description,
-        //   image: updatedCollection.image,
-        //   items: updatedCollection.items,
-        // };
+        );  
 
         return newCollection
 
@@ -127,19 +121,37 @@ const resolvers = {
       throw new AuthenticationError('User not authenticated3');
     },
 
-    // deletes an item from a collection
-    // removeItemFromCollection: async (_parent: any, { collectionId, itemId }: { collectionId: string; itemId: string }, context: any) => {
-    //   if (context.user) {
-    //     const updatedCollection = await Collection.findByIdAndUpdate(
-    //       collectionId,
-    //       { $pull: { items: itemId } },
-    //       { new: true }
-    //     );
+    deleteItem: async (
+      _parent: any,
+      { collectionId, itemId }: { collectionId: string; itemId: string },
+      context: any
+    ) => {
+      console.log('Incoming deleteItem request:', { collectionId, itemId });
+    
+      if (!context.user) {
+        throw new AuthenticationError('User not authenticated');
+      }
+    
+      if (!collectionId || !itemId) {
+        throw new Error('collectionId and itemId are required');
+      }
+    
+      const updatedCollection = await Collection.findByIdAndUpdate(
+        String(collectionId), // Ensure it's a string
+        { $pull: { items: String(itemId) } }, // Ensure itemId is a string
+        { new: true }
+      );
+    
+      if (!updatedCollection) {
+        throw new Error('Collection not found');
+      }
+    
+      console.log('Updated Collection after deleteItem:', updatedCollection);
+    
+      return updatedCollection; // ✅ Ensure the return type matches your GraphQL schema
+    },
 
-    //     return updatedCollection;
-    //   }
-    //   throw new AuthenticationError('User not authenticated3');
-    // },
+    
 
     // add a user
     addUser: async (_parent: any, args: any) => {

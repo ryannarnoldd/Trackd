@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_ITEM_COLLECTION } from '../utils/mutations';
+import { ADD_ITEM } from '../utils/mutations';
 // this makes collectionId a prop.
 const AddItemForm = ({ collectionId }: { collectionId: string }) => {
   const [formState, setFormState] = useState({
@@ -10,8 +10,8 @@ const AddItemForm = ({ collectionId }: { collectionId: string }) => {
     condition: '',
     image: '',
   });
-  // This uses the mutation ADD_ITEM_COLLECTION from the mutations.ts file in the utils folder.
-  const [addItemToCollection, { error }] = useMutation(ADD_ITEM_COLLECTION);
+  // This uses the mutation ADD_ITEM from the mutations.ts file in the utils folder.
+  const [addItem, { error }] = useMutation(ADD_ITEM);
   // updates the form state when you type in something.
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -22,7 +22,7 @@ const AddItemForm = ({ collectionId }: { collectionId: string }) => {
     event.preventDefault();
     // trys to add an item to the specified collection, sends collectionId and itemData to the mutation.
     try {
-      await addItemToCollection({
+      await addItem({
         variables: { 
           collectionId, 
           itemData: {
