@@ -11,7 +11,7 @@ const Home: React.FC = () => {
 
   return (
     <Container style={{ marginTop: "20px" }}>
-      <h1 className="text-center mb-4">My Collections</h1>
+      <h1 className="text-center mb-4">Your Collections</h1>
 
       {loading && <h2 className="text-center">Loading...</h2>}
       {error && <h2 className="text-center text-danger">Error: {error.message}</h2>}
