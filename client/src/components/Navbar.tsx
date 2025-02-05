@@ -6,7 +6,7 @@ const AppNavbar = () => {
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
-      <Container fluid>
+      <Container>
         <Navbar.Brand as={Link} to="/"> Trackd </Navbar.Brand>
 
         <Nav> 
@@ -18,7 +18,7 @@ const AppNavbar = () => {
         
         {location.pathname === '/signup' || location.pathname === '/login' ? (
           <>
-            <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
+            <Nav.Link as={Link} to="/signup">Sign Up</Nav.Link>
             <Nav.Link as={Link} to="/login">Login</Nav.Link>
           </>
         ) : location.pathname === '/profile' ? (
