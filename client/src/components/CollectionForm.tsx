@@ -24,7 +24,7 @@ const CollectionForm = ({ showModal }: CollectionFormProps) => {
                 variables: { 
                     title: formData.title,
                     description: formData.description, 
-                    image: formData.image
+                    image: formData.image || `https://picsum.photos/200`
                 }
             });
 
