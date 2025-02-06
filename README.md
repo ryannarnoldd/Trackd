@@ -16,14 +16,15 @@ Trackd is an ALL-in-One hobbyist/collector app where you are able to track the b
 
 ## Installation
 
-All that is needed is to either clone the repository and run `npm install`, change the `.emv` file(s), run the schema.sql under postgres, and run `npm run build && npm run start:dev`. Or, you can go to the live deployment at the link below.
+All that is needed to run this application is to clone the repository and run `npm install` in the terminal. Then fix the `.env.EXAMPLE` to `.env`. After that, you can run `npm run build` to build the application, then finally run `npm run start` to begin the application. Make sure to set up both your Render deployment, Github Secret, and MongoDB Atlas to get the application running.
 
-https://Trackd-t67i.onrender.com
+Or, you can go to the deployed link below to see the application in action.
+
+Deployed Link: https://trackd-2b85.onrender.com/
 
 ## Usage
 
-The usage of this application is simple. The user has to first make an account using their email and an username and password, of their choice. The user can create posts about books that they read. They can also update and delete, only their own posts. The user can also view a certain user's post, by clicking on their name link. And go to their home feed to see what everyone else has been reading.
-
+The usage of this application is to track your hobbies and collections. You can add and delete items from your collection. You can also add, edit, and delete categories and metrics for each category. You can also see overall statistics for each category.
 
 ## Contributing
 
