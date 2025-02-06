@@ -8,6 +8,7 @@ import { useMutation } from "@apollo/client";
 interface Item {
   _id: string;
   name: string;
+  description?: string;
   price: number;
 }
 
@@ -30,20 +31,38 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ collection }) => {
 
   const handleDeleteCollection = async () => {
     try {
-
       await deleteCollection({ variables: { collectionId: collection._id } });
-
     } catch (err) {
       console.error('Error deleting collection:', err);
     }
   };
 
   return (
-    <Card>
+    <Card style={{ position: "relative" }}>
+      <Button
+        onClick={handleDeleteCollection}
+        variant="danger"
+        style={{
+          position: "absolute",
+          top: "5px",
+          right: "5px",
+          borderRadius: "50%",
+          width: "25px",
+          height: "25px",
+          padding: "0",
+          fontSize: "0.8rem",
+          lineHeight: "1",
+        }}
+      >
+        X
+      </Button>
       <Card.Img variant="top" src={collection.image} alt={collection.title} />
       <Card.Body>
-        <Card.Title>{collection.title} ${100}
-          <Button onClick={() => handleDeleteCollection()} variant="danger">Delete</Button>
+      <Card.Title>
+          {collection.title} $
+          {collection.items && collection.items.length > 0 
+              ? collection.items.reduce((sum, item) => sum + item.price, 0) 
+              : 0}
         </Card.Title>
         <Card.Text>{collection.description}</Card.Text>
 
