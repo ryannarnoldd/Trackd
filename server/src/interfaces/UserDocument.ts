@@ -7,3 +7,5 @@ export default interface IUserDocument {
   isCorrectPassword(password: string): Promise<boolean>;
  // bookCount: number | null;
 }
+
+// Maybe in future use a virtual for the statistics on page. Shouldn't be difficult.
