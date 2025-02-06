@@ -29,6 +29,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ collection }) => {
   const [deleteCollection] = useMutation(DELETE_COLLECTION, { refetchQueries: [QUERY_ME, 'Me'] });
   const [deleteItem] = useMutation(DELETE_ITEM, { refetchQueries: [QUERY_ME, 'Me'] });
 
+  // Deletes the collection.
   const handleDeleteCollection = async () => {
     try {
       await deleteCollection({ variables: { collectionId: collection._id } });
@@ -72,6 +73,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ collection }) => {
             <b key={item._id}>
               {/* Add a small tiny X button that will delete the item. */}
               <li> {item.name} {item.price > 0 ? `($${item.price})` : ''}{' '}
+                {/* Deletes Item. */}
                 <Button onClick={async () => {
                   await deleteItem({ variables: { collectionId: collection._id, itemId: item._id } })
                 }} variant="danger">X</Button>

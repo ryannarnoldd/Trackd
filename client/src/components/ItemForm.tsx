@@ -14,6 +14,7 @@ const ItemForm = ({ collectionId, showModal }: ItemFormProps) => {
     const [formData, setFormData] = useState({ name: '', description: '', price: '' });
     const [addItem] = useMutation(ADD_ITEM, { refetchQueries: [QUERY_ME, 'Me'] });
 
+    // On submit.
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -23,6 +24,7 @@ const ItemForm = ({ collectionId, showModal }: ItemFormProps) => {
         e.preventDefault();
         try {
             console.log(formData.name);
+            // Adds new item.
             await addItem({ 
                 variables: { 
                     collectionId: collectionId,
