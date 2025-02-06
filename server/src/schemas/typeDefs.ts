@@ -29,26 +29,9 @@ const typeDefs = gql`
     token: ID!
     user: User!
   }
-  
-  input ItemInput {
-    name: String!
-    description: String
-    price: Float
-    condition: String
-    image: String
-  }
-
-  input CollectionInput {
-    title: String!
-    description: String
-    image: String
-  }
 
   type Query {
     me: User!
-    getCollections: [Collection]
-    getCollectionById(collectionId: ID!): Collection
-    getItemsInCollection(collectionId: ID!): [Item]
   }
 
   type Mutation {

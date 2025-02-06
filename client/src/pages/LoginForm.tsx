@@ -32,6 +32,7 @@ const LoginForm = () => {
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    // Checks validity of form.
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();

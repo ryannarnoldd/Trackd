@@ -25,32 +25,6 @@ export const ADD_USER = gql`
   }
 `;
 
-// export const SAVE_ITEM = gql`
-//   mutation addItem($itemData: ItemInput!) {
-//     addItem(itemData: $itemData) {
-//       _id
-//     }
-//   }
-// `;
-
-// export const REMOVE_ITEM = gql`
-//   mutation removeItemFromCollection($collectionId: ID!, $itemId: ID!) {
-//     removeItemFromCollection(collectionId: $collectionId, itemId: $itemId) {
-//       _id
-//       username
-//       email
-//       items {
-//         itemId
-//         title
-//         description
-//         price
-//         condition
-//         image
-//       }
-//     }
-//   }
-// `;
-
 export const CREATE_COLLECTION = gql`
   mutation createCollection($title: String!, $description: String, $image: String) {
     createCollection(title: $title, description: $description, image: $image) {  
@@ -79,3 +53,5 @@ export const DELETE_ITEM = gql`
       _id
     }
   }`;
+
+// Future to add mutations that will edit and update collections and items.

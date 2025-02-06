@@ -12,11 +12,13 @@ const CollectionForm = ({ showModal }: CollectionFormProps) => {
     const [formData, setFormData] = useState({ title: '', description: '', image: '' });
     const [createCollection] = useMutation(CREATE_COLLECTION);
 
+    // On input to create a new collection.
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-// 
+
+    // On submit.
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {

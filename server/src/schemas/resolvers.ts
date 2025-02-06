@@ -15,45 +15,6 @@ const resolvers = {
       }
       throw new AuthenticationError('User! not authenticated3');
     },  
-    
-    
-    
-    // gets the current users collections
-    // getCollections: async (_parent: any, _args: any, context: any) => {
-    //   console.log('im here:');
-    //   if (context.user) {
-    //     // JUST print the user ID.
-    //     console.log('User ID:', context.user["_id"]);
-    //     const user = await User.findById(context.user._id).populate('collections').exec();
-        
-    //     if (user) {
-    //       return user.collections;
-    //     } else {
-    //       throw new AuthenticationError('User not found');
-    //     }
-
-    //   }
-    //   console.log('out here');
-    //   throw new AuthenticationError('User not authenticated3');
-    // },
-
-    // get a specific collection by id #
-    // getCollectionById: async (_parent: any, { collectionId }: { collectionId: string }, context: any) => {
-    //   if (context.user) {
-    //     const collection = await Collection.findById(collectionId).exec();
-    //     return collection;
-    //   }
-    //   throw new AuthenticationError('User not authenticated3');
-    // },
-
-    // get all items from a collection
-    // getItemsInCollection: async (_parent: any, { collectionId }: { collectionId: string }, context: any) => {
-    //   if (context.user) {
-    //     const collection = await Collection.findById(collectionId).populate('items').exec();
-    //     return collection?.items;
-    //   }
-    //   throw new AuthenticationError('User not authenticated3');
-    // },
   },
 
   Mutation: {
@@ -151,9 +112,7 @@ const resolvers = {
       return updatedCollection; // ✅ Ensure the return type matches your GraphQL schema
     },
 
-    
-
-    // add a user
+    // adds the user
     addUser: async (_parent: any, args: any) => {
       const user = await User.create(args);
       const token = signToken(user.username, user.email, user._id);

@@ -10,6 +10,7 @@ import { QUERY_ME } from "../utils/queries.js";
 const Profile = () => {
     const { data } = useQuery(QUERY_ME);
 
+    // Maps through the prices to create an array of prices, then sums them it together.
     function sumPrices(data: any) {
         let total = 0;
 
