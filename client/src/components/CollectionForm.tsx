@@ -20,11 +20,12 @@ const CollectionForm = ({ showModal }: CollectionFormProps) => {
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
+            const randomNum = Math.floor(Math.random() * 200) + 1;
             await createCollection({ 
                 variables: { 
                     title: formData.title,
                     description: formData.description, 
-                    image: formData.image || `https://picsum.photos/200`
+                    image: formData.image || `https://picsum.photos/${randomNum}`
                 }
             });
 
