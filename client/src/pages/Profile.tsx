@@ -8,7 +8,7 @@ const Profile = () => {
     return (
         <Container className="text-center mt-5">
             <h1>Profile Statistics</h1>
-            <h2>Total Dollars in Collection: ${40}</h2>
+            <h2>Coming Soon!</h2>
 
             <Button variant="danger" onClick={() => {
                 localStorage.removeItem('id_token');
